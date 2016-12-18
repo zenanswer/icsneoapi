@@ -6,6 +6,10 @@ LIBS=-lpthread -lftdi
 AR=ar
 
 all: shared lib
+	mkdir -p ics/include/ics
+	cp -pr src/icsnVC40.h src/icsneo40API.h ics/include/ics/
+	mkdir -p ics/lib
+	cp -pr libicsneoapi.so libicsneoapi.a ics/lib
 
 shared: CFTDILib.o cicsneoVI.o icsneoLinuxAPI.o OCriticalSection.o OEvent.o OSAbstraction.o OThread.o
 	$(CXX) $(LDFLAGS) -o libicsneoapi.so CFTDILib.o cicsneoVI.o icsneoLinuxAPI.o OCriticalSection.o OEvent.o OSAbstraction.o OThread.o $(LIBS)
@@ -35,4 +39,4 @@ OThread.o: src/OThread.cpp
 	$(CXX) $(CFLAGS) src/OThread.cpp
 
 clean:
-	rm -rf *.o libicsneo.a libicsneoapi.so
+	rm -rf *.o libicsneo.a libicsneoapi.so ics/
